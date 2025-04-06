@@ -1,4 +1,4 @@
-# Case Study #1 - Danny's Diner
+# 🍜Case Study #1 - Danny's Diner
 <img src="https://github.com/user-attachments/assets/5c8e9d58-2e46-4acb-a82e-8d573c935019" alt="Danny's Diner" width="400"/>
 
 ## Problem Statement
@@ -7,19 +7,19 @@ Danny wants to use the data to answer a few simple questions about his customers
 ## Entity Relationship Diagram
 <img src="https://github.com/user-attachments/assets/4078b633-6e09-4922-994f-0a7ab9de3190" alt="Dany's Diner" width="700"/>
 
-**Table 1: sales**
+**Table 1️⃣: sales**
 <br>
 The sales table captures all customer_id level purchases with an corresponding order_date and product_id information for when and what menu items were ordered.
 
-**Table 2: menu**
+**Table 2️⃣: menu**
 <br>
 The menu table maps the product_id to the actual product_name and price of each menu item.
 
-**Table 3: members**
+**Table 3️⃣: members**
 <br>
 The final members table captures the join_date when a customer_id joined the beta version of the Danny’s Diner loyalty program.
 
-## Business Questions and Solutions
+## ❓Business Questions and Solutions
 
 **1. What is the total amount each customer spent at the restaurant?**
 
@@ -172,4 +172,43 @@ LEFT JOIN members mem ON s.customer_id= mem.customer_id
 WHERE join_date IS NOT NULL
 GROUP BY s.customer_id
 ORDER BY s.customer_id ASC;
+```
+
+## Bonus Questions
+**Join All The Things**
+```sql
+SELECT  s.customer_id,
+		order_date,
+        product_name,
+        price,
+        CASE WHEN order_date>=join_date  THEN 'Y'
+        ELSE 'N' END as member
+FROM sales s
+FULL OUTER JOIN menu m ON s.product_id= m.product_id
+FULL OUTER JOIN members mem ON s.customer_id= mem.customer_id
+ORDER BY customer_id, order_date
+```
+
+**Rank All The Things**
+```sql
+SELECT  
+  s.customer_id,
+  order_date,
+  product_name,
+  price,
+  CASE 
+    WHEN order_date>=join_date THEN 'Y'
+    ELSE 'N' 
+  END AS member,
+  
+  CASE 
+    WHEN order_date>=join_date THEN 
+      DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY product_name)
+    ELSE NULL 
+  END AS rank
+
+FROM sales s
+FULL OUTER JOIN menu m ON s.product_id = m.product_id
+FULL OUTER JOIN members mem ON s.customer_id = mem.customer_id
+ORDER BY customer_id, order_date;
 ```
