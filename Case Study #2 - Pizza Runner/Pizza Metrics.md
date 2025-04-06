@@ -19,7 +19,7 @@ SELECT
 		COUNT(order_id) as succesful_delivery_count
 FROM runners r
 LEFT JOIN runner_orders ro ON r.runner_id= ro.runner_id
-WHERE cancellation IS NULL or cancellation= ''
+WHERE pickup_time IS NOT NULL
 GROUP BY r.runner_id
 ORDER BY r.runner_id ASC;
 ```
@@ -49,7 +49,7 @@ OR
 ```sql
 SELECT co.customer_id,
        COALESCE(CASE WHEN pn.pizza_name='Vegetarian' THEN COUNT(order_id) END,0) as vegetarian_order_count,
-       COALESCE(CASE WHEN pn.pizza_name='Meatlovers' THEN COUNT(order_id) END,0) as vegetarian_order_count
+       COALESCE(CASE WHEN pn.pizza_name='Meatlovers' THEN COUNT(order_id) END,0) as meatlovers_order_count
 FROM customer_orders co
 LEFT JOIN pizza_names pn ON  pn.pizza_id= co.pizza_id
 GROUP BY pn.pizza_name, customer_id
