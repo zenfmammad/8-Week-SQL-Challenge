@@ -8,11 +8,11 @@ SELECT
   customer_id, 
   pizza_id, 
   CASE
-	  WHEN exclusions IS null OR exclusions LIKE 'null' THEN ' '
+	  WHEN exclusions IS null OR exclusions LIKE 'null' OR exclusions='' THEN NULL
 	  ELSE exclusions
 	  END AS exclusions,
   CASE
-	  WHEN extras IS NULL or extras LIKE 'null' THEN ' '
+	  WHEN extras IS NULL or extras LIKE 'null' OR extras='' THEN NULL
 	  ELSE extras
 	  END AS extras,
 	order_time
