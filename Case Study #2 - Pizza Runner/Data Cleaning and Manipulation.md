@@ -1,4 +1,14 @@
 # 🍕 Case Study #2 - Pizza Runner
+![image](https://github.com/user-attachments/assets/8e052443-f02c-4438-bd9e-90910d116b73)
+
+## Business Task
+Danny was inspired by an Instagram post: “80s Retro Styling and Pizza Is The Future!” He loved the idea but knew pizza alone wouldn’t secure funding. So he combined it with another big idea—Uber-style delivery—and launched Pizza Runner, delivering fresh pizzas straight from his house with the help of freelance devs and local “runners.”
+
+## Entity Relationship Diagram
+![Screenshot 2025-04-25 235241](https://github.com/user-attachments/assets/b8595498-f923-4979-b13c-115d187342b5)
+
+
+
 ## 🧹 Data Cleaning and Manipulation
 
 ```sql
