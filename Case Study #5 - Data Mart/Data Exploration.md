@@ -84,3 +84,32 @@ GROUP BY demographic, calendar_year;
 ```
 
 #### 8️⃣ Which age_band and demographic values contribute the most to Retail sales?
+```sql
+--Age Band
+SELECT age_band,
+       sum(sales) as sales
+FROM clean_weekly_sales
+WHERE platform='Retail'
+GROUP BY age_band
+ORDER BY sales desc
+LIMIT 1;
+
+--Demographic
+SELECT demographic,
+       sum(sales) as sales
+FROM clean_weekly_sales
+WHERE platform='Retail'
+GROUP BY demographic
+ORDER BY sales desc
+LIMIT 1;
+
+--Together
+SELECT  age_band,
+        demographic,
+       sum(sales) as sales
+FROM clean_weekly_sales
+WHERE platform='Retail'
+GROUP BY age_band, demographic
+ORDER BY sales desc
+LIMIT 1;
+```
