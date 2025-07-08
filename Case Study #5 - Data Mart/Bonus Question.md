@@ -41,3 +41,4 @@ SELECT
   ROUND(100*(after_sales - before_sales) / NULLIF(before_sales, 0), 2) AS growth_percentage
 FROM before_after;
 ```
+![image](https://github.com/user-attachments/assets/2210aac7-1e60-4397-84b7-729936c1e5c5)
