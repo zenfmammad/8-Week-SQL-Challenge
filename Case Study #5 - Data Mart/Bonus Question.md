@@ -1,4 +1,4 @@
-# Case Study #5 - Data Mart
+# 🛒 Case Study #5 - Data Mart
 
 ## 4.Bonus Questions
 
