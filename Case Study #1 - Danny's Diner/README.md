@@ -32,6 +32,8 @@ LEFT JOIN menu m ON s.product_id= m.product_id
 GROUP BY customer_id
 ORDER BY customer_id ASC;
 ```
+![image](https://github.com/user-attachments/assets/797a4cc4-47f4-4b43-8c30-d51284c7e9e2)
+
 
 **2. How many days has each customer visited the restaurant?**
 
@@ -43,6 +45,8 @@ FROM sales
 GROUP BY customer_id
 ORDER BY customer_id ASC;
 ```
+![image](https://github.com/user-attachments/assets/adcef12e-22f3-4021-b290-42a69409d71e)
+
 
 **3. What was the first item from the menu purchased by each customer?**
 
@@ -65,6 +69,8 @@ WHERE rank = 1
 GROUP BY customer_id, product_name
 ORDER BY customer_id ASC;
 ```
+![image](https://github.com/user-attachments/assets/dc33599f-d5e6-48c4-b414-1e955ac92ac7)
+
 
 **4. What is the most purchased item on the menu and how many times was it purchased by all customers?**
 ```sql
@@ -77,6 +83,8 @@ GROUP BY product_name
 ORDER BY COUNT(order_date) DESC
 LIMIT 1;
 ```
+![image](https://github.com/user-attachments/assets/eb007b3f-9018-411e-aca1-9456b6cb900e)
+
 
 **5. Which item was the most popular for each customer?**
 ```sql
@@ -98,6 +106,8 @@ FROM ranked_purchased_count
 WHERE rank=1
 GROUP BY customer_id, product_name, purchased_count;
 ```
+![image](https://github.com/user-attachments/assets/98027981-d0da-4ba6-ae4f-839d669d545a)
+
 
 **6. Which item was purchased first by the customer after they became a member?**
 ```sql
@@ -115,35 +125,41 @@ SELECT customer_id,
 FROM ranked_order_dates
 WHERE rank=1;
 ```
+![image](https://github.com/user-attachments/assets/9682cf83-a85f-4cf6-bff7-504f74b11665)
+
 
 **7. Which item was purchased just before the customer became a member?**
 ```sql
 WITH ranked_order_dates as 
 (SELECT  s.customer_id,
- 		product_name,
+         product_name,
         ROW_NUMBER() OVER(PARTITION BY s.customer_id ORDER BY order_date) as rank
 FROM sales s
 LEFT JOIN members mem ON s.customer_id= mem.customer_id
 LEFT JOIN menu m ON s.product_id= m.product_id
-WHERE order_date join_date)          
+WHERE order_date<join_date)          
 SELECT customer_id,
 	   product_name
 FROM ranked_order_dates
 WHERE rank=1;
 ```
+![image](https://github.com/user-attachments/assets/19caca99-79e6-4ed6-b6e8-cc91f5c1c9fe)
+
 
 
 **8.What is the total items and amount spent for each member before they became a member?**
 ```sql
 SELECT  s.customer_id,
-        SUM(price)
+        SUM(price) as amount_spent
 FROM sales s
 LEFT JOIN members mem ON s.customer_id= mem.customer_id
 LEFT JOIN menu m ON s.product_id= m.product_id
-WHERE order_date join_date 
+WHERE order_date<join_date 
 GROUP BY s.customer_id
-ORDER BY s.customer_id ASC
+ORDER BY s.customer_id ASC;
  ```
+![image](https://github.com/user-attachments/assets/9c2a07db-181f-4578-b5d8-0a5a194fd1ad)
+
 
 **9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?**
 ```sql
@@ -154,8 +170,10 @@ SELECT  s.customer_id,
 FROM sales s
 LEFT JOIN menu m ON s.product_id= m.product_id
 GROUP BY s.customer_id
-ORDER BY s.customer_id ASC
+ORDER BY s.customer_id ASC;
 ```
+![image](https://github.com/user-attachments/assets/aa272e5f-112a-479a-890f-b79f1503f9c1)
+
 
 **10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?**
 ```sql
@@ -173,6 +191,8 @@ WHERE join_date IS NOT NULL
 GROUP BY s.customer_id
 ORDER BY s.customer_id ASC;
 ```
+![image](https://github.com/user-attachments/assets/c92d303c-1e0f-4582-bbd9-271b8d6e2c53)
+
 
 ## Bonus Questions
 **Join All The Things**
@@ -186,8 +206,10 @@ SELECT  s.customer_id,
 FROM sales s
 FULL OUTER JOIN menu m ON s.product_id= m.product_id
 FULL OUTER JOIN members mem ON s.customer_id= mem.customer_id
-ORDER BY customer_id, order_date
+ORDER BY customer_id, order_date;
 ```
+![image](https://github.com/user-attachments/assets/1c556c87-347b-465c-95ec-0e91f6b0ad34)
+
 
 **Rank All The Things**
 ```sql
@@ -212,3 +234,5 @@ FULL OUTER JOIN menu m ON s.product_id = m.product_id
 FULL OUTER JOIN members mem ON s.customer_id = mem.customer_id
 ORDER BY customer_id, order_date;
 ```
+![image](https://github.com/user-attachments/assets/ddaecfa9-03c3-423e-a482-aa9a8c4b757c)
+
