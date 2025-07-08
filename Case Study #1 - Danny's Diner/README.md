@@ -211,7 +211,9 @@ ORDER BY customer_id, order_date;
 ![image](https://github.com/user-attachments/assets/1c556c87-347b-465c-95ec-0e91f6b0ad34)
 
 
-**Rank All The Things**
+**Rank All The Things** <br>
+Danny also requires further information about the ranking of customer products, but he purposely does not need the ranking for non-member purchases so he expects null ranking values for the records when customers are not yet part of the loyalty program.
+
 ```sql
 SELECT  
   s.customer_id,
