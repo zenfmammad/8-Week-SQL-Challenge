@@ -3,8 +3,6 @@
 
 #### 1️⃣ What are the standard ingredients for each pizza?
 ```sql
---What are the standard ingredients for each pizza?
-
 WITH pizza_recipes_temp as
 ( SELECT
     pizza_name,
@@ -24,12 +22,42 @@ WITH pizza_recipes_temp as
 
 
 #### 2️⃣ What was the most commonly added extra?
+```sql
+WITH clean_customer_orders as(
+  SELECT pizza_id,
+       (case when extras='null' or extras='' then NULL ELSE extras END) as extras_clean
+FROM customer_orders)
+
+
+ SELECT
+    trim(unnest(string_to_array(extras_clean, ','))) :: int AS extras,
+    count(pizza_id) as count
+    
+FROM clean_customer_orders
+GROUP BY extras
+ORDER BY count DESC
+LIMIT 1;
+```
+![image](https://github.com/user-attachments/assets/be1928a2-89a6-4605-815a-cd51c1119b51)
 
 #### 3️⃣ What was the most common exclusion?
+```sql
+
+ SELECT
+    trim(unnest(string_to_array(exclusions, ','))) :: int AS exclusion,
+    count(pizza_id) as count
+    
+FROM customer_orders_temp
+GROUP BY exclusions
+ORDER BY count DESC
+LIMIT 1;
+```
+![image](https://github.com/user-attachments/assets/ef021b9e-8c83-4058-881f-5ef80f523de4)
+
 #### 4️⃣ Generate an order item for each record in the customers_orders table in the format of one of the following:
-- Meat Lovers
-- Meat Lovers - Exclude Beef
-- Meat Lovers - Extra Bacon
+- Meat Lovers <br>
+- Meat Lovers - Exclude Beef <br>
+- Meat Lovers - Extra Bacon <br>
 - Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers
 #### 5️⃣ Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
 - For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"
