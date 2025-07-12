@@ -1,4 +1,4 @@
-# 🍕 Case Study #2 - Pizz Runner
+# 🍕 Case Study #2 - Pizza Runner
 ## 🍅 Ingredient Optimisation
 
 #### 1️⃣ What are the standard ingredients for each pizza?
