@@ -1,4 +1,4 @@
-## Case Study #6 - Click Bate
+# Case Study #6 - Clique Bate
 
 ## Digital Analysis
 
