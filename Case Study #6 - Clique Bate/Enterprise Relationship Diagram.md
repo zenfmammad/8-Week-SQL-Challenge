@@ -2,7 +2,7 @@
 
 ## 1. Enterprise Relationship Diagram
 
-Using the following DDL schema details, I created an ERD for all the Clique Bait datasets in dbdiagram.oi
+I used the provided DDL schema to design an Entity-Relationship Diagram (ERD) for all Clique Bait datasets using dbdiagram.io.
 
 ```sql
 CREATE TABLE clique_bait.event_identifier (
