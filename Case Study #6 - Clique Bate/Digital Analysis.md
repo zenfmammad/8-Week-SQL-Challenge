@@ -29,12 +29,12 @@ FROM cookies_count;
 
 #### 3️⃣ What is the unique number of visits by all users per month?
 ```sql
-  SELECT 
-    EXTRACT(MONTH FROM event_time::DATE) as months,
-    COUNT(DISTINCT visit_id) as cookie_count
-  FROM clique_bait.events 
-  GROUP BY months
-  ORDER BY months ASC;
+SELECT 
+   EXTRACT(MONTH FROM event_time::DATE) as months,
+   COUNT(DISTINCT visit_id) as cookie_count
+FROM clique_bait.events 
+GROUP BY months
+ORDER BY months ASC;
 ```
 <img width="1184" height="274" alt="image" src="https://github.com/user-attachments/assets/6b310e6c-7c10-474d-a8a9-af04bc533c5d" />
 
@@ -42,7 +42,7 @@ FROM cookies_count;
 #### 4️⃣ What is the number of events for each event type?
 ```
 SELECT 
-	event_type,
+    event_type,
     COUNT(visit_id) as event_count
 
 FROM clique_bait.events
@@ -63,11 +63,22 @@ LEFT JOIN clique_bait.event_identifier ei on e.event_type= ei.event_type)
 SELECT ROUND(100*purchase_event_count/event_count , 2) as purchase_percentage
 FROM event_counts;
 ```
-
-<img width="748" height="115" alt="image" src="https://github.com/user-attachments/assets/dfdc007e-47e8-495f-967b-3e296e82681b" />
+<img width="908" height="96" alt="image" src="https://github.com/user-attachments/assets/4658cddc-5628-44a3-a9bb-7df76ff6294a" />
 
 
 #### 6️⃣ What is the percentage of visits which view the checkout page but do not have a purchase event?
+
 #### 7️⃣ What are the top 3 pages by number of views?
+```sql
+SELECT 
+	DISTINCT page_id,
+	COUNT(visit_id) as visit_count
+FROM clique_bait.events
+GROUP BY page_id
+ORDER BY visit_count DESC
+LIMIT 3;
+```
+<img width="1313" height="196" alt="image" src="https://github.com/user-attachments/assets/faa20f7c-d585-4356-9158-8a0551f7e733" />
+
 #### 8️⃣ What is the number of views and cart adds for each product category?
 #### 9️⃣ What are the top 3 products by purchases?
