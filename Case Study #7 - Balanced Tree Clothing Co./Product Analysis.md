@@ -111,8 +111,44 @@ GROUP BY segment_id, product_name;
 ```
 
 #### 7️⃣ What is the percentage split of revenue by segment for each category?
+```sql
+WITH revenue_by_product as (
+SELECT 
+    category_id,
+	segment_id,
+	sum(qty*s.price) - sum(qty*s.price*discount/100) as total_revenue
+FROM balanced_tree.sales s
+LEFT JOIN balanced_tree.product_details pd
+ON s.prod_id=pd.product_id
+GROUP BY category_id, segment_id)
+
+SELECT
+	category_id,
+	segment_id,
+    ROUND(100.0 * SUM(total_revenue) / SUM(SUM(total_revenue)) OVER (), 2) AS percentage_split
+FROM revenue_by_product
+GROUP BY category_id, segment_id;
+```
 
 #### 8️⃣ What is the percentage split of total revenue by category?
+```
+WITH revenue_by_product as (
+SELECT 
+    category_id,
+	sum(qty*s.price) - sum(qty*s.price*discount/100) as total_revenue
+FROM balanced_tree.sales s
+LEFT JOIN balanced_tree.product_details pd
+ON s.prod_id=pd.product_id
+GROUP BY category_id)
+
+SELECT
+	category_id,
+    ROUND(100.0 * SUM(total_revenue) / SUM(SUM(total_revenue)) OVER (), 2) AS percentage_split
+FROM revenue_by_product
+GROUP BY category_id;
+```
+<img width="1296" height="134" alt="image" src="https://github.com/user-attachments/assets/0e2ed0d0-8648-4330-a99a-8460bc7d6b8b" />
+
 
 #### 9️⃣ What is the total transaction “penetration” for each product? (hint: penetration = number of transactions where at least 1 quantity of a product was purchased divided by total number of transactions)
 
