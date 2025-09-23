@@ -1,4 +1,4 @@
-# Case Study #7 - Balanced Tree Clothing Co.
+# 🏔️ Case Study #7 - Balanced Tree Clothing Co.
 ## 💳 Transaction Analysis
 
 #### 1️⃣ How many unique transactions were there?
